@@ -28,6 +28,7 @@ const mockPrevStep = vi.fn();
 const mockData: RegistrationData = {
   email: '',
   password: '',
+  confirmPassword: '',
   firstName: '',
   lastName: '',
   dateOfBirth: '',
@@ -36,7 +37,7 @@ const mockData: RegistrationData = {
   avatar: undefined
 };
 
-describe('AccountStep 组件测试', () => {
+describe('AccountStep component test', () => {
   beforeEach(() => {
     // Reset mock functions
     mockUpdateData.mockClear();
@@ -88,15 +89,17 @@ describe('AccountStep 组件测试', () => {
 
   it('should call update function after filling form correctly', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-    
+
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@example.com' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'validPassword123' } });
+    fireEvent.change(screen.getByLabelText('Confirm Password'), { target: { value: 'validPassword123' } });
     fireEvent.click(screen.getByText('Next'));
-    
+
     await waitFor(() => {
       expect(mockUpdateData).toHaveBeenCalledWith({
         email: 'test@example.com',
-        password: 'validPassword123'
+        password: 'validPassword123',
+        confirmPassword: 'validPassword123'
       });
       expect(mockNextStep).toHaveBeenCalled();
     });
@@ -117,14 +120,14 @@ describe('AccountStep 组件测试', () => {
 
     const type1 = passwordInput.type;
 
-    // 第一次点击切换
+    // First click to toggle
     fireEvent.click(toggleButton);
     await waitFor(() => {
       expect(passwordInput.type === 'text' || passwordInput.type === 'password').toBe(true);
       expect(passwordInput.type).not.toBe(type1);
     });
 
-    // 第二次点击切换
+    // Second click to toggle
     fireEvent.click(toggleButton);
     await waitFor(() => {
       expect(passwordInput.type === 'text' || passwordInput.type === 'password').toBe(true);

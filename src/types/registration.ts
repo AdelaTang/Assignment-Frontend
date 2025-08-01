@@ -7,6 +7,7 @@ export interface RegistrationData {
   avatar?: File;
   email: string;
   password: string;
+  confirmPassword?: string;
 }
 
 export interface RegistrationStepProps {

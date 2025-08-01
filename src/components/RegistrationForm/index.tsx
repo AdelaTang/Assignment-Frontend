@@ -23,7 +23,6 @@ const RegistrationForm = () => {
         minHeight: '100vh',
         padding: '16px',
         width: '100%'
-        
     };
     
   const [currentStep, setCurrentStep] = useState(0);
@@ -53,10 +52,16 @@ const RegistrationForm = () => {
 
   return (
     <Flex vertical style={formStyles as CSSProperties}>
-        <Card style={{  width: '100%',
-                padding: screens.sm ? '24px' : '16px',
-                margin: 0,
-                borderRadius: 0}}>
+        <Card
+          style={{
+            width: '100%',
+            maxWidth: 1000,
+            margin: '0 auto',
+            padding: screens.sm ? '24px' : '16px',
+            borderRadius: 0,
+            boxShadow: screens.sm ? '0 2px 16px rgba(0,0,0,0.08)' : undefined,
+          }}
+        >
             <ProgressSteps current={currentStep} />
                 {steps[currentStep]}
         </Card>

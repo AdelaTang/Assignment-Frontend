@@ -9,8 +9,17 @@ const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
     updateData({
       email: values.email,
       password: values.password,
+      confirmPassword: values.confirmPassword,
     });
     nextStep();
+  };
+
+  // Confirm password validation
+  const validateConfirmPassword = (_: any, value: string) => {
+    if (!value || form.getFieldValue('password') === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject('Passwords do not match');
   };
 
   return (
@@ -20,6 +29,7 @@ const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
       initialValues={{
         email: data.email,
         password: data.password,
+        confirmPassword: data.confirmPassword || '',
       }}
       onFinish={onFinish}
     >
@@ -42,16 +52,24 @@ const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
           { validator: (_, value) => validatePassword(value) ? Promise.resolve() : Promise.reject('Password must be at least 8 characters') }
         ]}
       >
-        <Input.Password />
+        <Input.Password autoComplete="new-password" />
+      </Form.Item>
+
+      <Form.Item
+        label="Confirm Password"
+        name="confirmPassword"
+        dependencies={["password"]}
+        rules={[
+          { required: true, message: 'Please confirm your password!' },
+          { validator: validateConfirmPassword }
+        ]}
+      >
+        <Input.Password autoComplete="new-password" />
       </Form.Item>
 
       <div style={{ display: 'flex', gap: '16px' }}>
-        <Button style={{ flex: 1 }} onClick={prevStep}>
-          Previous
-        </Button>
-        <Button type="primary" htmlType="submit" style={{ flex: 1 }}>
-          Next
-        </Button>
+        <Button style={{ flex: 1 }} onClick={prevStep}>Previous</Button>
+        <Button type="primary" htmlType="submit" style={{ flex: 1 }}>Next</Button>
       </div>
     </Form>
   );

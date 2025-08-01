@@ -3,16 +3,18 @@ import { UploadOutlined } from '@ant-design/icons';
 import type { RegistrationStepProps } from '../../types/registration';
 import { countries } from '../../mockdata/countries';
 
-
 const DetailsStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextStep, prevStep }) => {
   const [form] = Form.useForm();
 
   const beforeUpload = (file: File) => {
-    const isImage = file.type.startsWith('image/');
-    if (!isImage) {
-      message.error('You can only upload image files!');
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG files!');
+      // Clear selected files
+      form.setFieldsValue({ avatar: [] });
+      return Upload.LIST_IGNORE;
     }
-    return isImage;
+    return true;
   };
 
   const onFinish = (values: any) => {
@@ -73,6 +75,8 @@ const DetailsStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
           listType="picture"
           beforeUpload={beforeUpload}
           maxCount={1}
+          accept="image/jpeg,image/png"
+          customRequest={({ onSuccess }) => setTimeout(() => onSuccess && onSuccess("ok"), 0)}
         >
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>

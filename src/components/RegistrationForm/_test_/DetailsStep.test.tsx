@@ -47,7 +47,7 @@ vi.mock('antd', async (importOriginal) => {
         const formInstance: Partial<FormInstance> = {
           getFieldValue: vi.fn(),
           getFieldsValue: vi.fn(),
-          setFieldsValue: vi.fn(),
+          setFieldsValue: vi.fn(), // ensure setFieldsValue exists
           validateFields: vi.fn().mockResolvedValue({
             country: 'US',
             gender: 'male',
@@ -199,6 +199,7 @@ describe('DetailsStep', () => {
     const mockFormInstance: Partial<FormInstance> = {
       validateFields: vi.fn().mockResolvedValue(testData),
       getFieldsValue: vi.fn().mockReturnValue(testData),
+      setFieldsValue: vi.fn(),
     };
 
     vi.mocked(Form.useForm).mockReturnValue([mockFormInstance as FormInstance]);
@@ -224,7 +225,7 @@ describe('DetailsStep', () => {
     const upload = screen.getByText('UploadIcon');
     fireEvent.click(upload);
     await waitFor(() => {
-      expect(message.error).toHaveBeenCalledWith('You can only upload image files!');
+      expect(message.error).toHaveBeenCalledWith('You can only upload JPG/PNG files!');
     });
     delete (window as any)._testUploadFileType;
   });

@@ -8,7 +8,7 @@ const convertToFormData = (data: Record<string, any>): FormData => {
   const formData = new FormData();
   
   Object.entries(data).forEach(([key, value]) => {
-    // 处理文件（如 avatar）或普通字段
+    // Handle files (such as avatar) or normal fields
     if (value !== undefined && value !== null) {
       formData.append(key, value);
     }

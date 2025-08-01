@@ -30,7 +30,7 @@ const ConfirmationStep: React.FC<SpecificRegistrationStepProps> = ({ data, prevS
     <div>
       {contextHolder}
 
-      <Card title="Review Your Information" style={{ marginBottom: 24 }}>
+      <Card title="Review Your Information" style={{ marginBottom: 24}} bodyStyle={{ padding: 12}}>
         <Descriptions bordered column={1}>
           <Descriptions.Item label="First Name">{data.firstName}</Descriptions.Item>
           <Descriptions.Item label="Last Name">{data.lastName}</Descriptions.Item>
@@ -41,10 +41,10 @@ const ConfirmationStep: React.FC<SpecificRegistrationStepProps> = ({ data, prevS
         </Descriptions>
       </Card>
 
-      <Space size="large">
-        <Button onClick={prevStep}>Previous</Button>
-        <Button type="primary" onClick={handleSubmit} loading={loading}>Submit Registration</Button>
-      </Space>
+      <div style={{ display: 'flex', gap: '16px', width: '100%' }}>
+        <Button style={{ width: '100%' }} onClick={prevStep}>Previous</Button>
+        <Button style={{ width: '100%' }} type="primary" onClick={handleSubmit} loading={loading}>Submit Registration</Button>
+      </div>
     </div>
   );
 };

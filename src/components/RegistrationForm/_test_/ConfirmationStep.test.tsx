@@ -108,7 +108,7 @@ describe('ConfirmationStep', () => {
         const submitButton = screen.getByRole('button', { name: /submit registration/i });
         fireEvent.click(submitButton);
 
-        // 只检查加载类，不检查 aria-disabled
+        // Only check loading class, not aria-disabled
         expect(submitButton).toHaveClass('ant-btn-loading');
 
         await waitFor(() => {

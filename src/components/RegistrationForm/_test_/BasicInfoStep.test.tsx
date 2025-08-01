@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeAll } from 'vitest';
 import BasicInfoStep from '../BasicInfoStep';
 import type { RegistrationData } from '../../../types/registration';
 
-
 export const setAntdDatePicker = (container: Element, dateString: string) => {
   // Use a more reliable selector
   const input = container.querySelector('.ant-picker-input input');
@@ -71,7 +70,7 @@ describe('BasicInfoStep component', () => {
     }, { timeout: 3000 });
   });
 
-  it('正确填写表单后应该调用更新函数', async () => {
+  it('should call update function after filling form correctly', async () => {
     render(<BasicInfoStep data={mockFormData} updateData={mockUpdateData} nextStep={mockNextStep} />);
 
     // Fill text fields

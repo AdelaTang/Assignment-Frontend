@@ -24,16 +24,14 @@ const BasicInfoStep: React.FC<RegistrationStepWithoutPreStepProps> = ({ data, up
         lastName: data.lastName,
         dateOfBirth: data.dateOfBirth ? dayjs(data.dateOfBirth) : null,
       }}
-      onFinish={onFinish}
-    >
+      onFinish={onFinish}>
       <Form.Item
         label="First Name"
         name="firstName"
         rules={[
           { required: true, message: 'Please input your first name!' },
           { validator: (_, value) => validateRequired(value) ? Promise.resolve() : Promise.reject('First name is required') }
-        ]}
-      >
+        ]}>
         <Input />
       </Form.Item>
 
@@ -62,7 +60,7 @@ const BasicInfoStep: React.FC<RegistrationStepWithoutPreStepProps> = ({ data, up
       >
         <DatePicker style={{ width: '100%' }} 
             aria-label="Select date of birth"
-            placeholder="YYYY-MM-DD (use keyboard to navigate)"/>
+            placeholder="YYYY-MM-DD"/>
       </Form.Item>
 
       <Form.Item>
