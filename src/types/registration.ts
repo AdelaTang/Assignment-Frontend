@@ -21,7 +21,7 @@ export interface SpecificRegistrationStepProps {
   data: RegistrationData;
   updateData?: (newData: Partial<RegistrationData>) => void;
   nextStep?: () => void;
-  prevStep?: () => void; 
+  prevStep?: () => void;
 }
 
 export interface RegistrationStepWithoutPreStepProps {

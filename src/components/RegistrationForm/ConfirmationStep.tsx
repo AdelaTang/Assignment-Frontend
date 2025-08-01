@@ -30,7 +30,7 @@ const ConfirmationStep: React.FC<SpecificRegistrationStepProps> = ({ data, prevS
     <div>
       {contextHolder}
 
-      <Card title="Review Your Information" style={{ marginBottom: 24}} bodyStyle={{ padding: 12}}>
+      <Card title="Review Your Information" style={{ marginBottom: 24 }} bodyStyle={{ padding: 12 }}>
         <Descriptions bordered column={1}>
           <Descriptions.Item label="First Name">{data.firstName}</Descriptions.Item>
           <Descriptions.Item label="Last Name">{data.lastName}</Descriptions.Item>

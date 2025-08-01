@@ -125,7 +125,7 @@ describe('DetailsStep', () => {
       })),
     });
   });
-  
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -205,9 +205,9 @@ describe('DetailsStep', () => {
     vi.mocked(Form.useForm).mockReturnValue([mockFormInstance as FormInstance]);
 
     render(<DetailsStep {...defaultProps} />);
-    
+
     fireEvent.click(screen.getByText('Next'));
-    
+
     await waitFor(() => {
       expect(mockUpdateData).toHaveBeenCalledWith(
         expect.objectContaining({

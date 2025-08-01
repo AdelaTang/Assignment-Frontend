@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
 import AccountStep from '../AccountStep';
-import type{ RegistrationData } from '../../../types/registration';
+import type { RegistrationData } from '../../../types/registration';
 
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {
@@ -47,7 +47,7 @@ describe('AccountStep component test', () => {
 
   it('should render all form fields correctly', () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-    
+
     expect(document.contains(screen.getByLabelText('Email'))).toBe(true);
     expect(document.contains(screen.getByLabelText('Password'))).toBe(true);
     expect(document.contains(screen.getByRole('button', { name: 'Previous' }))).toBe(true);
@@ -56,34 +56,34 @@ describe('AccountStep component test', () => {
 
   it('should validate required fields', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-    
+
     fireEvent.click(screen.getByText('Next'));
-    
+
     await waitFor(() => {
-        expect(document.contains(screen.getByText('Please input your email!'))).toBe(true);
-        expect(document.contains(screen.getByText('Please input your password!'))).toBe(true);
+      expect(document.contains(screen.getByText('Please input your email!'))).toBe(true);
+      expect(document.contains(screen.getByText('Please input your password!'))).toBe(true);
     });
   });
 
   it('should validate email format', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-    
+
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'invalid-email' } });
     fireEvent.click(screen.getByText('Next'));
-    
+
     await waitFor(() => {
-        expect(document.contains(screen.getByText('Please enter a valid email'))).toBe(true);
+      expect(document.contains(screen.getByText('Please enter a valid email'))).toBe(true);
     });
   });
 
   it('should validate password length', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-    
+
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'short' } });
     fireEvent.click(screen.getByText('Next'));
-    
+
     await waitFor(() => {
-        expect(document.contains(screen.getByText('Password must be at least 8 characters'))).toBe(true);
+      expect(document.contains(screen.getByText('Password must be at least 8 characters'))).toBe(true);
     });
   });
 
@@ -107,7 +107,7 @@ describe('AccountStep component test', () => {
 
   it('should call prevStep when Previous button is clicked', () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-    
+
     fireEvent.click(screen.getByText('Previous'));
     expect(mockPrevStep).toHaveBeenCalled();
   });

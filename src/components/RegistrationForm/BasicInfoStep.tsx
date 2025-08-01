@@ -51,16 +51,17 @@ const BasicInfoStep: React.FC<RegistrationStepWithoutPreStepProps> = ({ data, up
         name="dateOfBirth"
         rules={[
           { required: true, message: 'Please select your date of birth!' },
-          { validator: (_, value) => 
-            value && validateDateOfBirth(value.format('YYYY-MM-DD')) 
-              ? Promise.resolve() 
-              : Promise.reject('Date of birth must be in the past') 
+          {
+            validator: (_, value) =>
+              value && validateDateOfBirth(value.format('YYYY-MM-DD'))
+                ? Promise.resolve()
+                : Promise.reject('Date of birth must be in the past')
           }
         ]}
       >
-        <DatePicker style={{ width: '100%' }} 
-            aria-label="Select date of birth"
-            placeholder="YYYY-MM-DD"/>
+        <DatePicker style={{ width: '100%' }}
+          aria-label="Select date of birth"
+          placeholder="YYYY-MM-DD" />
       </Form.Item>
 
       <Form.Item>

@@ -6,7 +6,7 @@ const api = axios.create({
 
 const convertToFormData = (data: Record<string, unknown>): FormData => {
   const formData = new FormData();
-  
+
   Object.entries(data).forEach(([key, value]) => {
     // Handle files (such as avatar) or normal fields
     if (value !== undefined && value !== null) {
@@ -22,6 +22,6 @@ export const registerUser = async (data: Record<string, unknown>) => {
     console.log('Mock data:', data);
     return { data: { success: true } };
   }
-  
+
   return api.post('/api/register', convertToFormData(data));
 };

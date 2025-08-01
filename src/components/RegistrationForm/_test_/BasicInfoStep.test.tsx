@@ -52,7 +52,6 @@ beforeAll(() => {
   });
 });
 
-
 describe('BasicInfoStep component', () => {
   const mockUpdateData = vi.fn();
   const mockNextStep = vi.fn();
