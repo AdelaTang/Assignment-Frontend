@@ -38,6 +38,20 @@ const ConfirmationStep: React.FC<SpecificRegistrationStepProps> = ({ data, prevS
           <Descriptions.Item label="Country">{data.country}</Descriptions.Item>
           <Descriptions.Item label="Gender">{data.gender}</Descriptions.Item>
           <Descriptions.Item label="Email">{data.email}</Descriptions.Item>
+          <Descriptions.Item label="Avatar">
+            {data.avatar && (
+              <img
+                src={URL.createObjectURL(data.avatar)}
+                alt="Avatar"
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100px',
+                  objectFit: 'contain',
+                  display: 'inline-block'
+                }}
+              />
+            )}
+          </Descriptions.Item>
         </Descriptions>
       </Card>
 

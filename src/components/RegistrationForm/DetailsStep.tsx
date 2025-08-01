@@ -33,6 +33,7 @@ const DetailsStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
       initialValues={{
         country: data.country,
         gender: data.gender,
+        avatar: data.avatar ? [{ originFileObj: data.avatar }] : [],
       }}
       onFinish={onFinish}
     >
