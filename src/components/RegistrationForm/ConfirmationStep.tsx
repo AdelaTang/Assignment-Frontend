@@ -10,13 +10,13 @@ const ConfirmationStep: React.FC<SpecificRegistrationStepProps> = ({ data, prevS
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await registerUser(data);
+      const response = await registerUser(data as unknown as Record<string, unknown>);
       messageApi.success({
         content: 'Registration successful!',
         duration: 5,
       });
       console.log('Registration response:', response.data);
-    } catch (error) {
+    } catch {
       messageApi.error({
         content: 'Registration failed. Please try again.',
         duration: 5,

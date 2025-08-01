@@ -17,7 +17,7 @@ const DetailsStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
     return true;
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: { country: string; gender: string; avatar?: { originFileObj: File }[] }) => {
     updateData({
       country: values.country,
       gender: values.gender,

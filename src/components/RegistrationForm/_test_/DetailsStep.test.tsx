@@ -24,11 +24,11 @@ vi.mock('antd', async (importOriginal) => {
   const actual = await importOriginal<typeof import('antd')>();
   // Form is both a component and has Item/useForm properties
   const MockForm = Object.assign(
-    ({ children, onFinish }: any) => (
+    ({ children, onFinish }: { children: React.ReactNode; onFinish?: (values: { country: string; gender: string; avatar: File }) => void }) => (
       <form
         onSubmit={e => {
           e.preventDefault();
-          const shouldValidatePass = (window as any)._shouldValidatePass !== false;
+          const shouldValidatePass = (window as { _shouldValidatePass?: boolean })._shouldValidatePass !== false;
           if (shouldValidatePass && onFinish) {
             onFinish({
               country: 'US',
@@ -47,7 +47,7 @@ vi.mock('antd', async (importOriginal) => {
         const formInstance: Partial<FormInstance> = {
           getFieldValue: vi.fn(),
           getFieldsValue: vi.fn(),
-          setFieldsValue: vi.fn(), // ensure setFieldsValue exists
+          setFieldsValue: vi.fn(),
           validateFields: vi.fn().mockResolvedValue({
             country: 'US',
             gender: 'male',
@@ -63,14 +63,14 @@ vi.mock('antd', async (importOriginal) => {
   return {
     ...actual,
     Form: MockForm,
-    Upload: ({ children, beforeUpload }: any) => {
+    Upload: ({ children, beforeUpload }: { children: React.ReactNode; beforeUpload?: (file: File, fileList: File[]) => void }) => {
       // Allow window._testUploadFileType to control type, default is image/png
       return (
         <div
           onClick={() => {
             if (typeof beforeUpload === 'function') {
-              const fileType = (window as any)._testUploadFileType || 'image/png';
-              beforeUpload({ type: fileType }, []);
+              const fileType = (window as { _testUploadFileType?: string })._testUploadFileType || 'image/png';
+              beforeUpload(new File([''], 'mock.png', { type: fileType }), []);
             }
           }}
         >
@@ -179,13 +179,13 @@ describe('DetailsStep', () => {
   });
 
   it('validates required fields before submission', async () => {
-    (window as any)._shouldValidatePass = false; // Simulate validation failure
+    (window as { _shouldValidatePass?: boolean })._shouldValidatePass = false; // Simulate validation failure
     render(<DetailsStep {...defaultProps} />);
     fireEvent.click(screen.getByText('Next'));
     await waitFor(() => {
       expect(mockNextStep).not.toHaveBeenCalled();
     });
-    delete (window as any)._shouldValidatePass;
+    delete (window as { _shouldValidatePass?: boolean })._shouldValidatePass;
   });
 
   it('submits form with valid data', async () => {
@@ -220,13 +220,13 @@ describe('DetailsStep', () => {
   });
 
   it('rejects non-image files in upload', async () => {
-    (window as any)._testUploadFileType = 'text/plain'; // Set to non-image type
+    (window as { _testUploadFileType?: string })._testUploadFileType = 'text/plain'; // Set to non-image type
     render(<DetailsStep {...defaultProps} />);
     const upload = screen.getByText('UploadIcon');
     fireEvent.click(upload);
     await waitFor(() => {
       expect(message.error).toHaveBeenCalledWith('You can only upload JPG/PNG files!');
     });
-    delete (window as any)._testUploadFileType;
+    delete (window as { _testUploadFileType?: string })._testUploadFileType;
   });
 });

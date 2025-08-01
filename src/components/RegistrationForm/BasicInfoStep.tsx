@@ -6,7 +6,7 @@ import { validateRequired, validateDateOfBirth } from '../../utils/validation';
 const BasicInfoStep: React.FC<RegistrationStepWithoutPreStepProps> = ({ data, updateData, nextStep }) => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: { firstName: string; lastName: string; dateOfBirth: dayjs.Dayjs }) => {
     updateData({
       firstName: values.firstName,
       lastName: values.lastName,

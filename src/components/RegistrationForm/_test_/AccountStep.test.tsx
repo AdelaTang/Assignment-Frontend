@@ -138,12 +138,12 @@ describe('AccountStep component test', () => {
 
 // Fix AntD Form test warning
 vi.mock('antd', async () => {
-  const actual = await vi.importActual('antd');
+  const actual = await vi.importActual<typeof import('antd')>('antd');
   return {
     ...actual,
     Form: {
-      ...(actual as any).Form,
-      useForm: () => [(actual as any).Form.useForm()[0], { scrollToField: vi.fn() }],
+      ...actual.Form,
+      useForm: () => [actual.Form.useForm()[0], { scrollToField: vi.fn() }],
     },
   };
 });

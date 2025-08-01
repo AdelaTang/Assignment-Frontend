@@ -5,7 +5,7 @@ import { validateEmail, validatePassword } from '../../utils/validation';
 const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextStep, prevStep }) => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: { email: string; password: string; confirmPassword: string }) => {
     updateData({
       email: values.email,
       password: values.password,
@@ -15,7 +15,7 @@ const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
   };
 
   // Confirm password validation
-  const validateConfirmPassword = (_: any, value: string) => {
+  const validateConfirmPassword = (_: unknown, value: string) => {
     if (!value || form.getFieldValue('password') === value) {
       return Promise.resolve();
     }

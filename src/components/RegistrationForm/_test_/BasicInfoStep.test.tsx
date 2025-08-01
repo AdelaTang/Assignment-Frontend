@@ -5,7 +5,7 @@ import type { RegistrationData } from '../../../types/registration';
 
 export const setAntdDatePicker = (container: Element, dateString: string) => {
   // Use a more reliable selector
-  const input = container.querySelector('.ant-picker-input input');
+  const input = container.querySelector<HTMLInputElement>('.ant-picker-input input');
   if (!input) {
     throw new Error('AntD DatePicker input not found. Please check if the correct selector is used.');
   }
