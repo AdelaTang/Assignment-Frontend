@@ -1,4 +1,4 @@
-import { Card, Descriptions, Button, message, Space } from 'antd';
+import { Card, Descriptions, Button, message } from 'antd';
 import type { SpecificRegistrationStepProps } from '../../types/registration';
 import { registerUser } from '../../api/mockApi';
 import { useState } from 'react';
