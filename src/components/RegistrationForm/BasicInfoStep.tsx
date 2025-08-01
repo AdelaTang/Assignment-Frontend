@@ -66,9 +66,7 @@ const BasicInfoStep: React.FC<RegistrationStepWithoutPreStepProps> = ({ data, up
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
-          Next
-        </Button>
+        <Button type="primary" htmlType="submit" block>Next</Button>
       </Form.Item>
     </Form>
   );

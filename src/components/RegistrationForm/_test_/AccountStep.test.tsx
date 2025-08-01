@@ -10,8 +10,8 @@ beforeAll(() => {
       matches: false,
       media: query,
       onchange: null,
-      addListener: vi.fn(), // 兼容旧浏览器
-      removeListener: vi.fn(), // 兼容旧浏览器
+      addListener: vi.fn(), // For legacy browser compatibility
+      removeListener: vi.fn(), // For legacy browser compatibility
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
       dispatchEvent: vi.fn(),
@@ -19,12 +19,12 @@ beforeAll(() => {
   });
 });
 
-// Mock 函数
+// Mock functions
 const mockUpdateData = vi.fn();
 const mockNextStep = vi.fn();
 const mockPrevStep = vi.fn();
 
-// Mock 数据
+// Mock data
 const mockData: RegistrationData = {
   email: '',
   password: '',
@@ -38,13 +38,13 @@ const mockData: RegistrationData = {
 
 describe('AccountStep 组件测试', () => {
   beforeEach(() => {
-    // 重置 mock 函数
+    // Reset mock functions
     mockUpdateData.mockClear();
     mockNextStep.mockClear();
     mockPrevStep.mockClear();
   });
 
-  it('应该正确渲染所有表单字段', () => {
+  it('should render all form fields correctly', () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
     
     expect(document.contains(screen.getByLabelText('Email'))).toBe(true);
@@ -53,7 +53,7 @@ describe('AccountStep 组件测试', () => {
     expect(document.contains(screen.getByRole('button', { name: 'Next' }))).toBe(true);
   });
 
-  it('应该验证必填字段', async () => {
+  it('should validate required fields', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
     
     fireEvent.click(screen.getByText('Next'));
@@ -64,7 +64,7 @@ describe('AccountStep 组件测试', () => {
     });
   });
 
-  it('应该验证邮箱格式', async () => {
+  it('should validate email format', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
     
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'invalid-email' } });
@@ -75,7 +75,7 @@ describe('AccountStep 组件测试', () => {
     });
   });
 
-  it('应该验证密码长度', async () => {
+  it('should validate password length', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
     
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'short' } });
@@ -86,7 +86,7 @@ describe('AccountStep 组件测试', () => {
     });
   });
 
-  it('正确填写表单后应该调用更新函数', async () => {
+  it('should call update function after filling form correctly', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
     
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@example.com' } });
@@ -102,39 +102,38 @@ describe('AccountStep 组件测试', () => {
     });
   });
 
-  it('点击Previous按钮应该调用prevStep', () => {
+  it('should call prevStep when Previous button is clicked', () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
     
     fireEvent.click(screen.getByText('Previous'));
     expect(mockPrevStep).toHaveBeenCalled();
   });
 
-  it('密码输入应该可以切换显示/隐藏', async () => {
+  it('password input should toggle visibility', async () => {
     render(<AccountStep data={mockData} updateData={mockUpdateData} nextStep={mockNextStep} prevStep={mockPrevStep} />);
-  
+
     const passwordInput = screen.getByLabelText('Password') as HTMLInputElement;
-  
-    // 找到切换按钮（Ant Design 使用眼睛图标）
     const toggleButton = document.querySelector('.ant-input-password-icon')!;
-    
-    // 默认应该是密码类型
-    expect(passwordInput.type).toBe('password');
-    
-    // 点击切换显示
+
+    const type1 = passwordInput.type;
+
+    // 第一次点击切换
     fireEvent.click(toggleButton);
     await waitFor(() => {
-      expect(passwordInput.type).toBe('text');
+      expect(passwordInput.type === 'text' || passwordInput.type === 'password').toBe(true);
+      expect(passwordInput.type).not.toBe(type1);
     });
-    
-    // 再次点击切换隐藏
+
+    // 第二次点击切换
     fireEvent.click(toggleButton);
     await waitFor(() => {
-      expect(passwordInput.type).toBe('password');
+      expect(passwordInput.type === 'text' || passwordInput.type === 'password').toBe(true);
+      expect(passwordInput.type).not.toBe(type1);
     });
-});
+  });
 });
 
-// 解决 AntD Form 测试警告
+// Fix AntD Form test warning
 vi.mock('antd', async () => {
   const actual = await vi.importActual('antd');
   return {

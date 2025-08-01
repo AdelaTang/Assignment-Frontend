@@ -1,7 +1,7 @@
 import { Form, Select, Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import type { RegistrationStepProps } from '../../types/registration';
-import { countries } from '../../mockdata/countries'; // You'll need to create this list or use a library
+import { countries } from '../../mockdata/countries';
 
 
 const DetailsStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextStep, prevStep }) => {
@@ -79,12 +79,8 @@ const DetailsStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
       </Form.Item>
 
       <div style={{ display: 'flex', gap: '16px' }}>
-        <Button style={{ flex: 1 }} onClick={prevStep}>
-          Previous
-        </Button>
-        <Button type="primary" htmlType="submit" style={{ flex: 1 }}>
-          Next
-        </Button>
+        <Button style={{ flex: 1 }} onClick={prevStep}>Previous</Button>
+        <Button type="primary" htmlType="submit" style={{ flex: 1 }}>Next</Button>
       </div>
     </Form>
   );
