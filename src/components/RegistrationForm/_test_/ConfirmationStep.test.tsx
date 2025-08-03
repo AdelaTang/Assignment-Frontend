@@ -33,11 +33,6 @@ vi.mock('antd', async (importOriginal) => {
     };
 });
 
-// Mock the registerUser API
-vi.mock('../../api/mockApi', () => ({
-    registerUser: vi.fn(),
-}));
-
 describe('ConfirmationStep', () => {
     const mockPrevStep = vi.fn();
     const mockData: RegistrationData = {

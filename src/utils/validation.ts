@@ -16,3 +16,10 @@ export const validateDateOfBirth = (dob: string): boolean => {
   const now = new Date();
   return date < now;
 };
+
+export const validateConfirmPassword = (password: string, confirmPassword: string): Promise<void> => {
+  if (!confirmPassword || password === confirmPassword) {
+    return Promise.resolve();
+  }
+  return Promise.reject('Passwords do not match');
+};

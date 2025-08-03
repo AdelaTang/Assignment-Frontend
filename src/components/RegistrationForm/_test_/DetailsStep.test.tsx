@@ -11,14 +11,6 @@ const mockCountries = [
   { code: 'CN', name: 'China' },
 ];
 
-// Mock countries data
-vi.mock('../../mockdata/countries', () => ({
-  countries: [
-    { code: 'US', name: 'United States' },
-    { code: 'CN', name: 'China' },
-  ],
-}));
-
 // Mock antd components
 vi.mock('antd', async (importOriginal) => {
   const actual = await importOriginal<typeof import('antd')>();

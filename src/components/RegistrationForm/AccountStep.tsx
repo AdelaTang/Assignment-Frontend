@@ -1,6 +1,6 @@
 import { Form, Input, Button } from 'antd';
 import type { RegistrationStepProps } from '../../types/registration';
-import { validateEmail, validatePassword } from '../../utils/validation';
+import { validateEmail, validatePassword, validateConfirmPassword } from '../../utils/validation';
 
 const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextStep, prevStep }) => {
   const [form] = Form.useForm();
@@ -12,14 +12,6 @@ const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
       confirmPassword: values.confirmPassword,
     });
     nextStep();
-  };
-
-  // Confirm password validation
-  const validateConfirmPassword = (_: unknown, value: string) => {
-    if (!value || form.getFieldValue('password') === value) {
-      return Promise.resolve();
-    }
-    return Promise.reject('Passwords do not match');
   };
 
   return (
@@ -61,7 +53,10 @@ const AccountStep: React.FC<RegistrationStepProps> = ({ data, updateData, nextSt
         dependencies={["password"]}
         rules={[
           { required: true, message: 'Please confirm your password!' },
-          { validator: validateConfirmPassword }
+          {
+            validator: (_, value) =>
+              validateConfirmPassword(form.getFieldValue('password'), value),
+          },
         ]}
       >
         <Input.Password autoComplete="new-password" />
